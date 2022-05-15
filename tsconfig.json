@@ -1,0 +1,38 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true, // necessary to allow 
+    "emitDecoratorMetadata": true, // necessary to prevent 
+    "sourceMap": true, // TODO: test
+    "target": "es5", // TODO: test
+    "module": "commonjs", // TODO: test
+    "outDir": "dist/", // TODO: test
+    "moduleResolution": "node", // TODO: test
+    "baseUrl": "./src", // TODO: test
+    "paths": { // TODO: test
+      "*": [
+        "*",
+      ],
+    },
+    "noEmitOnError": false, // TODO: test
+    "skipLibCheck": true, // TODO: test
+    "lib": [ // TODO: test
+      "es2015",
+      "es2017.object",
+      "es2016.array.include",
+      "dom"
+    ],
+    "preserveSymlinks": false
+  }, 
+  "include": [ // TODO: test
+    "src/typoa/**/*.ts",
+    "src/swagger-jsoc/*.ts",
+    "src/tsoa/**/*.ts", 
+  ],
+  "files": [
+    "src/swagger-jsdoc/example.swagger.ts"
+
+  ],
+  "exclude": [ // TODO: test
+    "node_modules",
+  ],
+}

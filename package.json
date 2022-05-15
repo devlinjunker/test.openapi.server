@@ -1,0 +1,31 @@
+{
+  "name": "test.typescript",
+  "version": "0.0.1-SNAPSHOT",
+  "description": "testing typescript concepts",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "compile": "npx tsc",
+    "build-swagger-jsdoc": "node dist/swagger-jsdoc/example.swagger.js",
+    "build-typoa": "node dist/typoa/typoa.doc.js; npx tsc",
+    "serve-typoa": "node dist/typoa/build/server.js",
+    "build-tsoa": "node dist/tsoa/tsoa.doc.js; npx tsc",
+    "serve-tsoa": "node dist/tsoa/build/server.js",
+    "clean": "rm src/*/build/routes.ts; rm -rf dist; rm -rf spec;"
+  },
+  "keywords": [
+    "typescript"
+  ],
+  "author": "devlin.junker@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.3",
+    "swagger-jsdoc": "^6.2.0",
+    "tsoa": "^3.14.1",
+    "typescript": "^4.6.3",
+    "typoa": "^1.0.0-alpha.43"
+  },
+  "devDependencies": {
+    "@types/node": "^16.11.26"
+  }
+}
