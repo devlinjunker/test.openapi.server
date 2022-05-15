@@ -21,9 +21,11 @@
   "dependencies": {
     "express": "^4.17.3",
     "swagger-jsdoc": "^6.2.0",
+    "swagger-ui-express": "^4.4.0",
     "tsoa": "^3.14.1",
     "typescript": "^4.6.3",
-    "typoa": "^1.0.0-alpha.43"
+    "typoa": "^1.0.0-alpha.43",
+    "yamljs": "^0.3.0"
   },
   "devDependencies": {
     "@types/node": "^16.11.26"

@@ -26,6 +26,16 @@ https://github.com/Surnet/swagger-jsdoc
 - PRO: Doesn't need typescript though (maybe?)
 - CON: Creates some extra nonsense (`channels`) that needs to be removed to match OpenAPI spec
 
+## TSOA
+https://github.com/lukeautry/tsoa
+- Route and SpecFile configs defined in `tsoa.doc.js`
+- Scripts:
+  - `npm run build-tsoa` - create typoa openapi file (uses `tsoa.doc.ts`)
+  - `npm run serve-tsoa` - run express server on `http://localhost:3000` (uses `server.ts` to run 
+- `template.hbs` used to generate `routes.ts` file for server
+- CON: Missing `info.version` property but otherwise OpenAPI compliant
+- PRO: uses Typescript decorators
+
 ## TYPOA
 https://github.com/Eywek/typoa
 - Tried this next
@@ -42,12 +52,5 @@ https://github.com/Eywek/typoa
 - PRO: Typescript Decorators
 - PRO: Seemed to work best for generating OpenAPI compliant spec file
 
-## TSOA
-https://github.com/lukeautry/tsoa
-- Route and SpecFile configs defined in `tsoa.doc.js`
-- Scripts:
-  - `npm run build-tsoa` - create typoa openapi file (uses `tsoa.doc.ts`)
-  - `npm run serve-tsoa` - run express server on `http://localhost:3000` (uses `server.ts` to run 
-- `template.hbs` used to generate `routes.ts` file for server
-- CON: Missing `info.version` property but otherwise OpenAPI compliant
-- PRO: uses Typescript decorators
+## Notes
+- Also added swagger-ui-express package to serve generated openapi yaml specs file
