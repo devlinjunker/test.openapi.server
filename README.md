@@ -54,3 +54,6 @@ https://github.com/Eywek/typoa
 
 ## Notes
 - Also added swagger-ui-express package to serve generated openapi yaml specs file
+
+## Ideas
+- [ ] Postman/Newman for testing
