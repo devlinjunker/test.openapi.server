@@ -1,0 +1,90 @@
+openapi: 3.0.0
+info:
+    title: my-service
+    version: 1.0.0
+paths:
+    /things:
+        get:
+            parameters: []
+            responses:
+                '200':
+                    description: Ok
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/FetchThingsResponse'
+            tags: []
+            security: []
+            operationId: FetchThings
+    '/things/{id}':
+        get:
+            parameters:
+                -
+                    name: id
+                    in: path
+                    schema:
+                        type: number
+                    required: true
+            responses:
+                '200':
+                    description: Ok
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/FetchThingResponse'
+            tags: []
+            security: []
+            operationId: FetchThing
+components:
+    schemas:
+        ExampleThing:
+            type: object
+            properties:
+                name:
+                    type: string
+            required:
+                - name
+        ExampleError:
+            type: object
+            properties:
+                message:
+                    type: string
+                code:
+                    type: number
+            required:
+                - message
+                - code
+        AnyValue:
+            description: 'Can be any value'
+            nullable: true
+        FetchThingsResponse:
+            type: object
+            properties:
+                result:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/ExampleThing'
+                error:
+                    $ref: '#/components/schemas/ExampleError'
+                request:
+                    $ref: '#/components/schemas/AnyValue'
+            required:
+                - result
+                - request
+        FetchThingResponse:
+            type: object
+            properties:
+                result:
+                    $ref: '#/components/schemas/ExampleThing'
+                error:
+                    $ref: '#/components/schemas/ExampleError'
+                request:
+                    $ref: '#/components/schemas/AnyValue'
+            required:
+                - result
+                - request
+    securitySchemes:
+        company:
+            type: apiKey
+            name: x-company-id
+            in: header

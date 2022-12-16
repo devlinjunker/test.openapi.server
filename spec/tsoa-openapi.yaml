@@ -1,0 +1,99 @@
+components:
+    examples: {}
+    headers: {}
+    parameters: {}
+    requestBodies: {}
+    responses: {}
+    schemas:
+        ExampleError:
+            properties:
+                code:
+                    type: number
+                    format: double
+                message:
+                    type: string
+            required:
+                - code
+                - message
+            type: object
+        ExampleThing:
+            properties:
+                name:
+                    type: string
+            required:
+                - name
+            type: object
+            additionalProperties: true
+        FetchThingsResponse:
+            properties:
+                request:
+                    anyOf:
+                        - {}
+                        -
+                            type: string
+                error:
+                    $ref: '#/components/schemas/ExampleError'
+                result:
+                    items:
+                        $ref: '#/components/schemas/ExampleThing'
+                    type: array
+            required:
+                - request
+                - result
+            type: object
+            additionalProperties: true
+        FetchThingResponse:
+            properties:
+                request:
+                    anyOf:
+                        - {}
+                        -
+                            type: string
+                error:
+                    $ref: '#/components/schemas/ExampleError'
+                result:
+                    $ref: '#/components/schemas/ExampleThing'
+            required:
+                - request
+                - result
+            type: object
+            additionalProperties: true
+    securitySchemes: {}
+info:
+    title: ""
+openapi: 3.0.0
+paths:
+    /things:
+        get:
+            operationId: FetchThings
+            responses:
+                '200':
+                    description: Ok
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/FetchThingsResponse'
+            security: []
+            parameters: []
+    '/things/{id}':
+        get:
+            operationId: FetchThing
+            responses:
+                '200':
+                    description: Ok
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/FetchThingResponse'
+            security: []
+            parameters:
+                -
+                    in: path
+                    name: id
+                    required: true
+                    schema:
+                        format: double
+                        type: number
+servers:
+    -
+        url: /api

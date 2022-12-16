@@ -1,0 +1,58 @@
+/* tslint:disable */
+/* eslint-disable */
+import express from 'express'
+import { RuntimeResponse, Validator } from 'typoa'
+import { ExampleMethod } from '../../example.type'
+{{#if securityMiddleware}}
+import { securityMiddleware } from '{{securityMiddleware}}'
+{{/if}}
+{{#each controllers}}
+import { {{name}} } from '{{path}}'
+{{#each methods}}
+{{#if bodyDiscriminator}}
+import { {{bodyDiscriminator.name}} } from '{{bodyDiscriminator.path}}'
+{{/if}}
+{{/each}}
+{{/each}}
+
+const schemas = {{json schemas}}
+
+export function bindToRouter (router: express.Router) {
+  {{#each controllers}}
+  {{#each methods}}
+  router.{{verb}}('{{endpoint}}'{{#each security}}, securityMiddleware({{json this}}){{/each}}, async (req: express.Request, res: express.Response, next: express.NextFunction) => {
+    try {
+      const method: ExampleMethod = {{../name}}.{{name}};
+      const data = await method(
+        {{#if params}}
+        ...(await Validator.validateAndParse(
+          req, schemas as any,
+          {
+            params: {{json params}},
+            body: {{#if body}}{{json body}}{{else}}undefined{{/if}},
+            bodyDiscriminatorFn: {{#if bodyDiscriminator}}{{bodyDiscriminator.name}}{{else}}undefined{{/if}}
+          }
+        ) as any)
+        {{/if}}
+      )
+
+      const controller = { getStatus: () => { return data?.error?.code; }, getHeaders: () => { }}
+      
+      {{#if validateResponse}}
+      const validatedData = Validator.validateAndParseResponse(
+        data, schemas as any, 
+        {{json responses}},
+        ('getStatus' in controller ? (controller as any).getStatus()?.toString() : undefined) ?? (typeof data !== 'undefined' && data !== null ? '200' : '204'),
+        ((('getHeaders' in controller ? (controller as any).getHeaders()?.['content-type'] : undefined) ?? 'application/json')).split(';')[0]
+      )
+      RuntimeResponse.send(controller, validatedData, res)
+      {{else}}
+      RuntimeResponse.send(controller, data, res)
+      {{/if}}
+    } catch (err) {
+      return next(JSON.stringify({ code: 500, message: err.toString(), stack: err.stack }))
+    }
+  })
+  {{/each}}
+  {{/each}}
+}

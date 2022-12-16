@@ -1,0 +1,58 @@
+openapi: 3.0.0
+info:
+  title: Hello World
+  version: 1.0.0
+paths:
+  /things:
+    get:
+      description: Retrieve All Things
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  request:
+                    type: string
+                  error:
+                    $ref: "#/components/schemas/ExampleError"
+                  result:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/ExampleThing"
+        "400":
+          description: Invalid Input
+        "500":
+          description: Internal Error
+  /things/:id:
+    get:
+      description: Retrieve A Thing By ID
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  request:
+                    type: string
+                  error:
+                    $ref: "#/components/schemas/ExampleError"
+                  result:
+                    $ref: "#/components/schemas/ExampleThing"
+        "400":
+          description: Invalid Input
+        "500":
+          description: Internal Error
+components:
+  schemas:
+    ExampleThing:
+      type: object
+      properties:
+        name:
+          type: string
+channels: {}
+tags: []
