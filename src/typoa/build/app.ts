@@ -1,4 +1,6 @@
-const express = require('express')
+const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const YAML = require("yamljs");
 const bodyParser = require("body-parser");
 import { bindToRouter } from "./routes";
 
@@ -11,5 +13,10 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+
+const swaggerDocument = YAML.load("./spec/typoa-openapi.yaml");
+
+// Add /doc endpoint for swagger
+app.use("/doc", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 bindToRouter(app);
